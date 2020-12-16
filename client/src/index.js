@@ -18,6 +18,17 @@ function App() {
             <tr>
                 <td>{micros.product}</td>
                 <td>{micros.progmemory}</td>
+                <td>{micros.memtype}</td>
+                <td>{micros.eeprom}</td>
+                <td>{micros.ram}</td>
+                <td>{micros.pins}</td>
+                <td>{micros.box}</td>
+                <td>{micros.ADC} X {micros.res} bites</td>
+                <td>{micros.comp}</td>
+                <td>{micros.timer16}-16 bits, {micros.timer8}-8 bits</td>
+                <td>{micros.serial}</td>
+                <td>{micros.max}</td>
+                <td>{micros.intOSC}</td>
             </tr>
         )
     }
@@ -27,8 +38,19 @@ function App() {
             <button onClick={search}>Search</button>
             <thead>
                 <tr>
-                    <td>micro</td>
-                    <td>memory</td>
+                    <td>Product</td>
+                    <td>Memory</td>
+                    <td>Memory_Type</td>
+                    <td>EEprom</td>
+                    <td>RAM</td>
+                    <td>I/O_Pins</td>
+                    <td>Packages</td>
+                    <td>A/D_COnverter</td>
+                    <td>Comp</td>
+                    <td>Timer</td>
+                    <td>Serial_COmm</td>
+                    <td>Max_Speed</td>
+                    <td>IntOSC</td>
                 </tr>
             </thead>
             <tbody>

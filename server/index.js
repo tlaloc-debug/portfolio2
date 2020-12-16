@@ -1,6 +1,9 @@
 const express = require("express");
 const mysql = require("mysql");
+const cors = require("cors");
 const app=express();
+
+app.use(cors());
 
 const database=mysql.createConnection({
     host:"localhost",
@@ -16,7 +19,7 @@ database.connect (err => {
 });
 
 app.get("/micros", (req, res) => {
-    database.query("SELECT * FROM micros", (err, result) => {
+    database.query("SELECT * FROM micros, analog, digital, speeds, memorytype, presentation where  micros.micro_id=analog.adc_id and micros.micro_id=digital.dig_id and micros.micro_id=speeds.speed_id and micros.packages=presentation.box_id and micros.memorytype=memorytype.type_id", (err, result) => {
         if (err) {
             return res.send(err)
         }
