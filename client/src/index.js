@@ -5,10 +5,12 @@ import "./index.css"
 
 function App() {
 
+    const [Pic, setPic]=useState(1); 
     const [List, setList]= useState([]);
 
     const search = () => {
-        axios.get("http://localhost:3001/micros").then((response) => {
+        axios.post("http://localhost:3001/user", {name: Pic});
+        axios.get("http://localhost:3001/user").then((response) => {
             setList(response.data)
         }); 
     }
@@ -35,6 +37,7 @@ function App() {
 
     return (
         <div>
+            <input type="number" onChange={(event)=>(setPic(event.target.value))}/>
             <button onClick={search}>Search</button>
             <thead>
                 <tr>
