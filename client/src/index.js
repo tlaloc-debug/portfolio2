@@ -1,7 +1,105 @@
-import react, {useState} from "react";
+import React, {useState} from "react";
 import reactDOM from "react-dom";
 import axios from "axios";
-import "./index.css"
+import { useTable } from 'react-table';
+import "./index.css";
+
+const IndeterminateCheckbox = React.forwardRef(
+    ({ indeterminate, ...rest }, ref) => {
+      const defaultRef = React.useRef()
+      const resolvedRef = ref || defaultRef
+  
+      React.useEffect(() => {
+        resolvedRef.current.indeterminate = indeterminate
+      }, [resolvedRef, indeterminate])
+  
+      return <input type="checkbox" ref={resolvedRef} {...rest} />
+    }
+  )
+  
+  function Table({ columns, data }) {
+    // Use the state and functions returned from useTable to build your UI
+    const {
+      getTableProps,
+      getTableBodyProps,
+      headerGroups,
+      rows,
+      prepareRow,
+      allColumns,
+      getToggleHideAllColumnsProps,
+      state,
+    } = useTable({
+      columns,
+      data,
+    })
+  
+    // Render the UI for your table
+    return (
+      <>
+        <div>
+          <table>
+            <tr>
+              <td>   
+                <div>
+                  <IndeterminateCheckbox {...getToggleHideAllColumnsProps()} /> Toggle All
+                </div>
+              </td>  
+            </tr>
+
+          <tr>
+          {allColumns.slice(1,8).map(column => (
+            //key={column.id} se usa para evitar mensaje de error
+            <td>
+            <div key={column.id} > 
+                <input type="checkbox" {...column.getToggleHiddenProps()} />{" "}{column.id}
+            </div>
+            </td>
+          ))}
+          </tr>
+          
+          <tr>
+          {allColumns.slice(8,15).map(column => (
+            //key={column.id} se usa para evitar mensaje de error
+            <td>
+            <div key={column.id} style={{display: "inline"}}> 
+                <input type="checkbox" {...column.getToggleHiddenProps()} />{" "}{column.id}
+            </div>
+            </td>
+          ))}
+          </tr>
+          </table>  
+          <br />
+
+
+        </div>
+          <table {...getTableProps()}>
+            <thead>
+              {headerGroups.map(headerGroup => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map(column => (
+                    <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                  ))}
+                    </tr>
+                  ))}
+            </thead>
+  
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row, i) => {prepareRow(row)
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map(cell => {
+                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  })}
+                </tr>
+              )
+            })}
+          </tbody>
+  
+        </table>     
+      </>
+    )
+  }
+
 
 function App() {
 
@@ -18,10 +116,48 @@ function App() {
     const [serial, setserial]=useState("yes");
     const [speed, setspeed]=useState(0);
     const [osc, setosc]=useState(0);
+
     const [List, setList]= useState([]);
+
     const [visible, setvisible]=useState(true);
 
     const [flip, setflip]=useState(true);
+
+    const columns =  [
+      {
+        Header: "General", 
+        columns: [
+          {Header: 'Product', accessor: 'product'},
+          {Header: 'Memory', accessor: 'progmemory'},
+          {Header: 'Memory_Type', accessor: 'memtype'},
+          {Header: 'EEprom', accessor: 'eeprom'},
+          {Header: 'RAM', accessor: 'ram'},
+          {Header: 'I/O_Pins', accessor: 'pins'},
+          {Header: 'Packages', accessor: 'box'}
+        ]},
+      {
+        Header: "Analog", 
+        columns: [
+          {Header: 'ADC', accessor: 'ADC'},
+          {Header: 'Res', accessor: 'res'}
+        ]},
+      {
+        Header: "Digital", 
+        columns: [
+          {Header: 'Comp', accessor: 'comp'},
+          {Header: '16bit', accessor: 'timer16'},
+          {Header: '8bit', accessor: 'timer8'},
+          {Header: 'Serial_ Comm', accessor: 'serial'}
+        ]},
+      {
+        Header: "Clock", 
+        columns: [    
+          {Header: 'Max_Speed', accessor: 'max'},
+          {Header: 'IntOSC', accessor: 'intOSC'},
+        ]},  
+      ];
+    
+    const data=List;
 
     const search = () => {
         axios.post("http://localhost:3001/search", {name: Pic});
@@ -54,26 +190,6 @@ function App() {
 
     const change = () => {
         setflip(!flip);
-    }
-
-    const rendermicros = (micros) => {
-        return (
-            <tr>
-                <td>{micros.product}</td>
-                <td>{micros.progmemory}</td>
-                <td>{micros.memtype}</td>
-                <td>{micros.eeprom}</td>
-                <td>{micros.ram}</td>
-                <td>{micros.pins}</td>
-                <td>{micros.box}</td>
-                <td>{micros.ADC} X {micros.res} bites</td>
-                <td>{micros.comp}</td>
-                <td>{micros.timer16}-16 bits, {micros.timer8}-8 bits</td>
-                <td>{micros.serial}</td>
-                <td>{micros.max}</td>
-                <td>{micros.intOSC}</td>
-            </tr>
-        )
     }
 
     return (
@@ -133,32 +249,7 @@ function App() {
                 </div>
             </div>
 
-            
-            <div>
-                
-            </div>
-            <div className={visible ? "showoff" : "showon"}>
-            <thead> 
-                <tr >
-                    <td>Product</td>
-                    <td>Memory</td>
-                    <td>Memory_Type</td>
-                    <td>EEprom</td>
-                    <td>RAM</td>
-                    <td>I/O_Pins</td>
-                    <td>Packages</td>
-                    <td>A/D_COnverter</td>
-                    <td>Comp</td>
-                    <td>Timer</td>
-                    <td>Serial_COmm</td>
-                    <td>Max_Speed</td>
-                    <td>IntOSC</td>
-                </tr>
-            </thead>
-            <tbody>
-                {List.map(rendermicros)}
-            </tbody>
-            </div>
+            <Table columns={columns} data={data} />
         </div>
     );
 }
