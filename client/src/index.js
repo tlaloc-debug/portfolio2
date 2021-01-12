@@ -3,6 +3,11 @@ import reactDOM from "react-dom";
 import axios from "axios";
 import { useTable } from 'react-table';
 import "./index.css";
+import logo from "./screenshot.png";
+import lcd from "./lcd.png";
+import pic from "./pic.png";
+import Description from "./description.js";
+
 
 const IndeterminateCheckbox = React.forwardRef(
     ({ indeterminate, ...rest }, ref) => {
@@ -194,6 +199,7 @@ function App() {
 
     return (
         <div>
+          <img src={logo} alt="logo"/><br/><br/>
             <div className={flip ? "flip-card" : "flip-card-after"}>
                 <div className={flip ? "flip-card-inner" : "flip-card-inner-after"}>
                     <div class="flip-card-front">
@@ -249,7 +255,12 @@ function App() {
                 </div>
             </div>
 
-            <Table columns={columns} data={data} />
+            <div className={visible ? "showoff" : "showon"}>
+              <Table columns={columns} data={data} />
+            </div>
+
+        <Description />
+
         </div>
     );
 }

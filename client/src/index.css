@@ -58,3 +58,22 @@ th, td {
   color: black;
   transform: rotateX(180deg);
 }
+
+.vanish:hover{
+  opacity: 0.9;
+}
+
+.vanish {
+  opacity: 0;
+}
+
+.transleft{
+  transition: transform 0.5s;
+  transform: translateX(0px);
+}
+
+.transrigth{
+  transition: transform 0.5s;
+  transform: translateX(350px);
+  
+}
