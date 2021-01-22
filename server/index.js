@@ -34,6 +34,12 @@ app.get("/ressearch", (req, res) => {
     })
 })
 
+app.get("/shop", (req, res) => {
+    database.query("SELECT * FROM micros, shop where micros.micro_id=shop.shop_id", (err, result ) => {
+        return res.send(result)
+    })
+})
+
 app.post("/advance", (req, res) => {
     memory=req.body.Memory;
     eeprom=req.body.Eeprom;

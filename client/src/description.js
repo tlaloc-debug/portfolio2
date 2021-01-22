@@ -20,13 +20,13 @@ class Description extends React.Component {
         this.onMouseMove = this.onMouseMove.bind(this);
         
         this.imageProps = {
-          enlargedImageContainerDimensions: {width: '150%', height: '150%'},
+          enlargedImageContainerDimensions: {width: "200%", height: "200%"},
             smallImage: {
                 alt: '',
                 isFluidWidth: true,
                 src: blocks,
-                
             },
+
             largeImage: {
                 src: blocks,
                 width: 800,
@@ -44,9 +44,9 @@ class Description extends React.Component {
    
 
     render (){
-        const {x, y, position} = this.state;
-        var text;
-        var head;
+      const {x, y, position} = this.state;
+      var text;
+      var head;
         if (x>20 && x<40 && y>20 && y<30){
             head="ADC (Analog-Digital Converter)";
             text="Description missing...";
@@ -93,40 +93,40 @@ class Description extends React.Component {
         }
 
         return (
-            <div > 
-                               
-                <div style={{width: "1200px", height: "400px", display: "flex", justifyContent: "space-around"}}> 
-                  <div style={{width: "15%", display: "flex"}}>
+          <div>
+            <div className={"header"}>
+
+              <div style={{width: "1000px", height: "400px", display: "flex", justifyContent: "space-around"}}> 
+                <div style={{width: "15%", display: "flex"}}>
                     
-                    <div style={{position: "relative", alignItems: "center"}}> 
+                  <div style={{position: "relative", alignItems: "center"}}> 
                     <img src={pic} alt="" style={{position: "absolute", width: "100%", marginTop: "40px"}}/>                           
-                      <a onClick={this.onMouseMove}>
-                      <ReactImageMagnify {...this.imageProps} className="vanish" style={{ height: "100%", position: "absolute", margin: "50% 10%"}}/>
-                      </a>
-
-                    </div>
+                    <a className={"effect"} onClick={this.onMouseMove}>
+                      <ReactImageMagnify {...this.imageProps} className={"vanish"} style={{ height: "100%", position: "absolute", margin: "50% 10%"}}/>
+                    </a>
+                  </div>
                    
-                    
-                  </div>
-                    <div style={{width: "50%", position: "relative", zIndex: -1}}>
-                      <img src={lcd} alt="" style={{width: "100%", position: "absolute"}}/>
-                      <div style={{position: "absolute", marginLeft: "10%", marginTop: "15%", marginRight: "10%", marginBottom: "15%"}}>
-                        <h3>{head}</h3>
-                        <p>{text}</p>
-                      </div>
-                      <div style={{position: "absolute", height: "40px", width: "350px", marginLeft: "30%", marginTop: "60%", marginRight: "0%", backgroundColor: "blue", zIndex: -1}}>
-                        <div className={position ?  "transleft" : "transrigth"} style={{backgroundColor: "red", width: "20px", height: "100%"}}>
-
-                        </div>
-                      </div>
-                  </div>
-
                 </div>
-                <h1>{x} {y}</h1>
-                
 
+                <div style={{width: "50%", position: "relative", zIndex: -1}}>
+
+                  <img src={lcd} alt="" style={{width: "100%", position: "absolute"}}/>
+                  <div style={{position: "absolute", marginLeft: "10%", marginTop: "15%", marginRight: "10%", marginBottom: "15%"}}>
+                    <h3>{head}</h3>
+                    <p>{text}</p>
+                  </div>
+
+                  <div style={{position: "absolute", height: "40px", width: "350px", marginLeft: "30%", marginTop: "60%", marginRight: "0%", backgroundColor: "blue", zIndex: -1}}>
+                    <div className={position ?  "transleft" : "transrigth"} style={{backgroundColor: "red", width: "20px", height: "100%"}}></div>
+                  </div>
+                </div>
+
+              </div>
             </div>
-          );
+            <h1>{x} {y}</h1>    
+
+          </div>
+        );
 
     }
 }
