@@ -9,10 +9,11 @@ function Shop () {
     const [List, setList]= useState([]);
     const [i,seti] = useState(0);
     const pages = [1,2,3,4,5,6,7];
-    const cart = [{article: "item", quantity: 2}];
+    const [cart, setcart] = useState ([""]);
     const [show, setshow] = useState (false);
     const [x, setx]= useState (1);
-    let index=0;
+    const [y,sety]= useState (0);
+    const [index,setindex] = useState (0);
 
     const view = () => {
         axios.get("http://localhost:3001/shop").then((response) => {
@@ -33,22 +34,23 @@ function Shop () {
     }
 
     const addcart = (item) => {
-        let myObj={article: item, quantity: x};
+        let myObj={article: item, quantity: x}
         cart[index]=(myObj);
         console.log(cart);
-        index=index+1;
-        
+        setindex(index+1);
+    
     }
 
     const seecart = () => {
         setshow(!show);
+        setcart(cart);
     }
 
-    const restar = () =>{
+    const more = () =>{
         setx(x-1);
     }
 
-    const sumar = () =>{
+    const less = () =>{
         setx(x+1);
     }
 
@@ -58,14 +60,16 @@ function Shop () {
                 <div style={{width: "85%"}}>
                     <button onClick={view}>All Products</button>
                     <div >
-                        <button onClick={restar}>-</button>
+                        <button onClick={less}>-</button>
                         <div>{x}</div>
-                        <button onClick={sumar}>+</button>
+                        <button onClick={more}>+</button>
                     </div>
                     <div style={{position: "relative"}}>
-                        <button onClick={seecart}>See cart {}</button>
+                        <button onClick={seecart}>See cart</button>
                         <div className={show ? "showon" : "showoff"} style={{position: "absolute"}}>
-                            
+                            {cart.map((items)=>{
+                                return <div>{items.article}</div>
+                            })} 
                         </div>
                     </div>
                     <div className={"gallery"}>
