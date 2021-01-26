@@ -12,8 +12,8 @@ function Shop () {
     const [cart, setcart] = useState ([""]);
     const [show, setshow] = useState (false);
     const [x, setx]= useState (1);
-    const [y,sety]= useState (0);
     const [index,setindex] = useState (0);
+    const [amount,setamount] = useState (0);
 
     const view = () => {
         axios.get("http://localhost:3001/shop").then((response) => {
@@ -33,12 +33,14 @@ function Shop () {
         seti((number-1)*25)
     }
 
-    const addcart = (item) => {
-        let myObj={article: item, quantity: x}
+    const addcart = (item, price) => {
+        let myObj={id: index, article: item, quantity: x, price: price, total: price}
         cart[index]=(myObj);
         console.log(cart);
         setindex(index+1);
-    
+        cart.map((dato=>{
+            setamount(amount+dato.total);
+        }))
     }
 
     const seecart = () => {
@@ -46,12 +48,31 @@ function Shop () {
         setcart(cart);
     }
 
-    const more = () =>{
-        setx(x-1);
+    const less = (minus) =>{
+        let counting=0;
+        cart[minus].quantity = cart[minus].quantity-1;
+        cart[minus].total = cart[minus].quantity * cart[minus].price;
+        setcart(cart);
+
+        cart.map((dato)=>{
+            counting = counting+dato.total;
+        })
+
+        setamount(counting);     
+          
     }
 
-    const less = () =>{
-        setx(x+1);
+    const more = (plus) =>{
+        let counting=0;
+        cart[plus].quantity = cart[plus].quantity+1;
+        cart[plus].total = cart[plus].quantity * cart[plus].price;
+        setcart(cart);
+        
+        cart.map((dato)=>{
+            counting = counting+dato.total;
+        })
+
+        setamount(counting);       
     }
 
     return (
@@ -59,17 +80,26 @@ function Shop () {
             <div className={"header"}>
                 <div style={{width: "85%"}}>
                     <button onClick={view}>All Products</button>
-                    <div >
-                        <button onClick={less}>-</button>
-                        <div>{x}</div>
-                        <button onClick={more}>+</button>
-                    </div>
+                    
                     <div style={{position: "relative"}}>
                         <button onClick={seecart}>See cart</button>
-                        <div className={show ? "showon" : "showoff"} style={{position: "absolute"}}>
+                        <div className={show ? "showon" : "showoff"} style={{position: "absolute", backgroundColor: "white"}}>
                             {cart.map((items)=>{
-                                return <div>{items.article}</div>
+                                return (
+                                    <div className={"header"}>
+                                        <div>{items.article}</div>
+                                        <div className={"header"}>
+                                            <button id={items.id} onClick={(ev) => less(ev.target.id)}>-</button>
+                                                <div>{items.quantity}</div>
+                                            <button id={items.id} onClick={(ev) => more(ev.target.id)}>+</button>
+                                        </div>
+                                        <div>{items.price}</div>
+                                        <div>{items.total}</div>
+                                        
+                                    </div>
+                                )
                             })} 
+                            <div>{amount}</div>
                         </div>
                     </div>
                     <div className={"gallery"}>
@@ -80,7 +110,7 @@ function Shop () {
                                     <div className={"galleryelement"}>{micros.product}
                                     <div className={"galleryelement"}> {micros.price}</div>
                                     <div className={"galleryelement"}>{micros.quantity >0 ? "available" : "not available"}</div>
-                                    <div><button id={micros.product}>Buy Now</button><button id={micros.product} onClick={(ev) => addcart(ev.target.id)}>Add Cart</button></div>
+                                    <div><button id={micros.product}>Buy Now</button><button id={micros.product} onClick={(ev) => addcart(ev.target.id, micros.price)}>Add Cart</button></div>
                                     </div>
                                     
                                 </div>
@@ -97,7 +127,7 @@ function Shop () {
                                     <div className={"galleryelement"}>{micros.product}
                                     <div className={"galleryelement"}> {micros.price}</div>
                                     <div className={"galleryelement"}>{micros.quantity >0 ? "available" : "not available"}</div>
-                                    <div><button id={micros.product}>Buy Now</button><button id={micros.product} onClick={(ev) => addcart(ev.target.id)}>Add Cart</button></div>
+                                    <div><button id={micros.product}>Buy Now</button><button id={micros.product} onClick={(ev) => addcart(ev.target.id, micros.price)}>Add Cart</button></div>
                                     </div>
                                 </div>
                             </div>
@@ -113,7 +143,7 @@ function Shop () {
                                     <div className={"galleryelement"}>{micros.product}
                                     <div className={"galleryelement"}> {micros.price}</div>
                                     <div className={"galleryelement"}>{micros.quantity >0 ? "available" : "not available"}</div>
-                                    <div><button id={micros.product}>Buy Now</button><button id={micros.product} onClick={(ev) => addcart(ev.target.id)}>Add Cart</button></div>
+                                    <div><button id={micros.product}>Buy Now</button><button id={micros.product} onClick={(ev) => addcart(ev.target.id, micros.price)}>Add Cart</button></div>
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +159,7 @@ function Shop () {
                                     <div className={"galleryelement"}> {micros.product}
                                     <div className={"galleryelement"}> {micros.price}</div>
                                     <div className={"galleryelement"}>{micros.quantity >0 ? "available" : "not available"}</div>
-                                    <div><button id={micros.product}>Buy Now</button><button id={micros.product} onClick={(ev) => addcart(ev.target.id)}>Add Cart</button></div>
+                                    <div><button id={micros.product}>Buy Now</button><button id={micros.product} onClick={(ev) => addcart(ev.target.id, micros.price)}>Add Cart</button></div>
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +175,7 @@ function Shop () {
                                     <div className={"galleryelement"}>{micros.product}
                                     <div className={"galleryelement"}> {micros.price}</div>
                                     <div className={"galleryelement"}>{micros.quantity >0 ? "available" : "not available"}</div>
-                                    <div><button id={micros.product}>Buy Now</button><button id={micros.product} onClick={(ev) => addcart(ev.target.id)}>Add Cart</button></div>
+                                    <div><button id={micros.product}>Buy Now</button><button id={micros.product} onClick={(ev) => addcart(ev.target.id, micros.price)}>Add Cart</button></div>
                                     </div>
                                 </div>
                             </div>
