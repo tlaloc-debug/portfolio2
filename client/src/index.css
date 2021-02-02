@@ -3,6 +3,50 @@
   justify-content: center;
 }
 
+.sesionon {
+  display: block;
+}
+
+.sesionoff{
+  display: none;
+}
+
+.inputson {
+  display: inline-block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.inputsoff {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.inputsRegon {
+  display: inline-block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.inputsRegoff {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
 .topnav{
   width: 100%;
   display: flex;
@@ -138,6 +182,14 @@ th, td {
   display: none;
 }
 
+.shopon{
+  display: block;
+}
+
+.shopoff{
+  display: none;
+}
+
 .gallery {
   display: flex;
   justify-content: space-around;
@@ -146,4 +198,75 @@ th, td {
 
 .galleryelement{
   text-align: center;
+}
+
+.avatar{
+  height: 100px;
+  width: 100px;
+}
+
+.checkouton {
+  display: block;
+}
+
+.checkoutoff {
+  display: none;
+}
+
+.allproductson{
+  display: block;
+}
+
+.allproductsoff{
+  display: none;
+}
+
+.micro{
+  height: 80px;
+}
+
+.checkoutformon {
+  display: block;
+  
+}
+
+.checkoutformoff {
+  display: none;
+  
+}
+
+.alerton {
+  display: inline-block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.alertoff {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.finishon {
+  display: inline-block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.finishoff {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }

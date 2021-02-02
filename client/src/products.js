@@ -161,11 +161,11 @@ function App() {
     const data=List;
 
     const search = () => {
-        axios.post("http://localhost:3001/search", {name: Pic});
-        axios.get("http://localhost:3001/ressearch").then((response) => {
-            setList(response.data)
-        }); 
-        if (visible===true) setvisible(!visible);
+        axios.post("http://localhost:3001/search", {name: Pic}).then((response) => {
+          setList(response.data)
+      }); 
+      if (visible===true) setvisible(!visible);
+        
     }
 
     const advance = () => {
@@ -182,12 +182,20 @@ function App() {
             Serial: serial,
             Speed: speed,
             Osc: osc      
-        });
-        axios.get("http://localhost:3001/resadvance").then((response) => {
-            setList(response.data)
-        }); 
-        if (visible===true) setvisible(!visible);
+        }).then((response) => {
+          setList(response.data)
+      }); 
+      if (visible===true) setvisible(!visible);
+        
     }
+
+    const family = (fam) => {
+      axios.post("http://localhost:3001/family", {name: fam}).then((response) => {
+        setList(response.data)
+    }); 
+    if (visible===true) setvisible(!visible);
+      
+  }
 
     const change = () => {
         setflip(!flip);
@@ -201,15 +209,19 @@ function App() {
     return (
         <div>
 
-          <div className={"header"} style={{border: "solid"}}>
+          <div className={"header"} >
             <div style={{width: "85%"}}>
               <div style={{display: "inline-block"}}>Select how you want to seacrh for a PIC:</div>
               <div style={{display: "inline-block", marginLeft: "20px"}} className={"selector"}><a  href="">Search by Family</a>
                 <div className={"menu"}>
                   <ul>
-                    <li>family1</li>
-                    <li>family2</li>
-                    <li>family3</li>
+                    <li id={1} onClick={(ev) => family(ev.target.id)}>PIC10FXXX</li>
+                    <li id={2} onClick={(ev) => family(ev.target.id)}>PIC12FXXX</li>
+                    <li id={3} onClick={(ev) => family(ev.target.id)}>PIC16C/F5X</li>
+                    <li id={4} onClick={(ev) => family(ev.target.id)}>PIC16CXXX</li>
+                    <li id={5} onClick={(ev) => family(ev.target.id)}>PIC16FXXX</li>
+                    <li id={6} onClick={(ev) => family(ev.target.id)}>PIC18FXXX</li>
+                    <li id={7} onClick={(ev) => family(ev.target.id)}>PIC18FXXJXX</li>
                   </ul>
                 </div>
               </div>
