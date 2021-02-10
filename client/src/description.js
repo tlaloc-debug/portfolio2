@@ -47,47 +47,47 @@ class Description extends React.Component {
       const {x, y, position} = this.state;
       var text;
       var head;
-        if (x>20 && x<40 && y>20 && y<30){
+        if (x>16 && x<30 && y>12 && y<20){
             head="ADC (Analog-Digital Converter)";
             text="Description missing...";
         }
-        if (x>50 && x<80 && y>20 && y<30){
+        if (x>35 && x<50 && y>15 && y<20){
           head="RES (Resolution)";
           text="Description missing...";
         }
-        if (x>100 && x<120 && y>40 && y<50){
+        if (x>65 && x<82 && y>25 && y<32){
           head="Timer";
           text="Description missing...";
         }
-        if (x>20 && x<45 && y>50 && y<70){
+        if (x>15 && x<30 && y>38 && y<45){
           head="Memory";
           text="Description missing...";
         }
-        if (x>50 && x<80 && y>50 && y<70){
+        if (x>35 && x<50 && y>38 && y<45){
           head="RAM (Random Acces Memory)";
           text="Description missing...";
         }
-        if (x>130 && x<150 && y>70 && y<80){
+        if (x>88 && x<104 && y>50 && y<58){
           head="Max Speed (Maximun Speed)";
           text="Description missing...";
         }
-        if (x>120 && x<150 && y>100 && y<120){
+        if (x>86 && x<104 && y>72 && y<80){
           head="IntOSC (Internal Oscilator)";
           text="Description missing...";
         }
-        if (x>95 && x<120 && y>120 && y<140){
+        if (x>65 && x<82 && y>84 && y<192){
           head="EEPROM (Electricaly Programable Memory)";
           text="Description missing...";
         }
-        if (x>95 && x<120 && y>140 && y<160){
+        if (x>65 && x<82 && y>96 && y<102){
           head="Serial Comm (Serial Communication)";
           text="Description missing...";
         }
-        if (x>50 && x<80 && y>150 && y<170){
+        if (x>36 && x<52 && y>108 && y<115){
           head="Comp (Comparator)";
           text="Description missing...";
         }
-        if (x>20 && x<200 && y>200 && y<220){
+        if (x>15 && x<104 && y>138 && y<146){
           head="I/O Pins (Input/Output Pins)";
           text="Description missing...";
         }
@@ -97,33 +97,33 @@ class Description extends React.Component {
             <div className={"header"}>
 
               <div style={{width: "1000px", height: "400px", display: "flex", justifyContent: "space-around"}}> 
-                <div style={{width: "15%", display: "flex"}}>
+                <div style={{width: "150px", display: "flex"}}>
                     
                   <div style={{position: "relative", alignItems: "center"}}> 
-                    <img src={pic} alt="" style={{position: "absolute", width: "100%", marginTop: "40px"}}/>                           
+                    <img src={pic} alt="" style={{position: "absolute", width: "150", marginTop: "40px"}}/>                           
                     <a className={"effect"} onClick={this.onMouseMove}>
-                      <ReactImageMagnify {...this.imageProps} className={"vanish"} style={{ height: "100%", position: "absolute", margin: "50% 10%"}}/>
+                      <ReactImageMagnify {...this.imageProps} className={"vanish"} style={{position: "absolute", margin: "100px 10px"}}/>
                     </a>
                   </div>
                    
                 </div>
 
-                <div style={{width: "50%", position: "relative", zIndex: -1}}>
+                <div style={{width: "500px", position: "relative", zIndex: -1}}>
 
-                  <img src={lcd} alt="" style={{width: "100%", position: "absolute"}}/>
-                  <div style={{position: "absolute", marginLeft: "10%", marginTop: "15%", marginRight: "10%", marginBottom: "15%"}}>
+                  <img src={lcd} alt="" style={{width: "500px", position: "absolute"}}/>
+                  <div style={{position: "absolute", marginLeft: "45px", marginTop: "80px", height: "140px", width: "400px"}}>
                     <h3>{head}</h3>
                     <p>{text}</p>
                   </div>
 
-                  <div style={{position: "absolute", height: "40px", width: "350px", marginLeft: "30%", marginTop: "60%", marginRight: "0%", backgroundColor: "blue", zIndex: -1}}>
-                    <div className={position ?  "transleft" : "transrigth"} style={{backgroundColor: "red", width: "20px", height: "100%"}}></div>
+                  <div style={{position: "absolute", height: "40px", width: "300px", marginLeft: "150px", marginTop: "300px", backgroundColor: "blue", zIndex: -1}}>
+                    <div className={position ?  "transleft" : "transrigth"} style={{backgroundColor: "red", width: "20px", height: "40px"}}></div>
                   </div>
                 </div>
 
               </div>
             </div>
-            <h1>{x} {y}</h1>    
+            {/*<h1>{x} {y}</h1>*/} 
 
           </div>
         );

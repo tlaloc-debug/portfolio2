@@ -5,6 +5,7 @@ import { useTable } from 'react-table';
 import "./index.css";
 import lcd from "./lcd.png";
 import pic from "./pic.png";
+import glass from "./glass.png";
 
 const IndeterminateCheckbox = React.forwardRef(
     ({ indeterminate, ...rest }, ref) => {
@@ -123,6 +124,7 @@ function App() {
     const [visible, setvisible]=useState(true);
     const [flip, setflip]=useState(true);
     const [panel, setpanel]= useState(false);
+    const [showglass, setshowglass] = useState(true);
 
     const columns =  [
       {
@@ -190,6 +192,7 @@ function App() {
     }
 
     const family = (fam) => {
+      setshowglass(false);
       axios.post("http://localhost:3001/family", {name: fam}).then((response) => {
         setList(response.data)
     }); 
@@ -202,6 +205,7 @@ function App() {
     }
 
     const searchpanel = () => {
+      setshowglass(false);
       setpanel(!panel);
     }
 
@@ -212,8 +216,9 @@ function App() {
           <div className={"header"} >
             <div style={{width: "85%"}}>
               <div style={{display: "inline-block"}}>Select how you want to seacrh for a PIC:</div>
+              
               <div style={{display: "inline-block", marginLeft: "20px"}} className={"selector"}><a  href="">Search by Family</a>
-                <div className={"menu"}>
+                <div className={"menu"} style={{backgroundColor: "white"}}>
                   <ul>
                     <li id={1} onClick={(ev) => family(ev.target.id)}>PIC10FXXX</li>
                     <li id={2} onClick={(ev) => family(ev.target.id)}>PIC12FXXX</li>
@@ -227,8 +232,15 @@ function App() {
               </div>
 
               <div style={{display: "inline-block", marginLeft: "20px"}}><a onClick={searchpanel}>Search by Keyword</a></div> 
+              
+              
+              <div className={showglass ? "glasson" : "glassoff"}>
+                <div className={"header"}>
+                  <img src={glass} alt="" style={{height: "200px", padding: "50px 0px"}}/>
+                </div>
+              </div>
 
-            
+              
 
           <div className={panel ? "bywordon" : "bywordoff"}>
             <br/>

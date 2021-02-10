@@ -16,12 +16,15 @@ import avatar4 from "./avatar4.jpeg";
 
 function App() {
 
+   
     const initialsesionsave = JSON.parse(localStorage.getItem("savesesion")) || [""];
 
     const [technical, settechnical] = useState(false);
     const [concept, setconcept] = useState(true);
     const [shop, setshop] = useState(false);
     const [checkout, setcheckout] = useState(false);
+    const bcrypt = require('bcryptjs');
+    
 
     const technicalclick = () => {
         settechnical(true);
@@ -43,11 +46,14 @@ function App() {
 
     const [userNameReg, setuserNameReg] = useState ("");
     const [passReg, setpassReg] = useState ("");
+    const [passReghash, setpassReghash] = useState("");
     const [responseReg, setresponseReg] = useState("null");
 
     const [userName, setuserName] = useState ("");
     const [pass, setpass] = useState ("");
-    const [response, setresponse] = useState ("null");
+    const [responseLog, setresponseLog] = useState("");
+    
+    const [text, settext]= useState("");
 
     const [user, setuser] = useState (initialsesionsave.usersave || "");
     const [sesion, setsesion] = useState (initialsesionsave.sesionsave || false);
@@ -58,13 +64,36 @@ function App() {
     const cuadro = ["", avatar1, avatar2, avatar3, avatar4];
     
 
-    const register = () => {
-        Axios.post("http://localhost:3001/register", {username: userNameReg, password: passReg, avatar: image}).then((response)=>setresponseReg(JSON.stringify(response)));
-    }
-
     const login = () => {
-        Axios.post("http://localhost:3001/login", {username: userName, password: pass}).then((response)=>setresponse(JSON.stringify(response.data)));
-        console.log(response);    
+        Axios.post("http://localhost:3001/login", {username: userName}).then((response)=>{
+            if (response.data.length==0) {setresponseLog("no hay datos")}
+            else {
+                let hash=response.data[0].password;
+                bcrypt.compare(pass, hash, function(err, res) {
+                if (res==true){
+                    setuser(userName);
+                    setsesion(true);
+                    setinputs(false);
+                    setimageRes(response.data[0].avatar);
+                    let myObj={usersave: userName, sesionsave: true, inputssesion: false, imagensesion: response.data[0].avatar};
+                    localStorage.setItem("savesesion", JSON.stringify(myObj));
+                    setresponseLog("Welcome back!")
+                } else {setresponseLog("Wrong password")}
+              });
+            }
+        });
+        
+    }    
+            
+    const register = () => {
+        if (userNameReg===""){
+            alert("no")
+        } else {
+            bcrypt.hash(passReg, 10, function(err, hash) {
+                Axios.post("http://localhost:3001/register", {username: userNameReg, password: hash, avatar: image}).then((response)=>setresponseReg(JSON.stringify(response)));
+                console.log(responseReg);
+            }); 
+        }
     }
 
     const IsRegister = () => {
@@ -81,25 +110,9 @@ function App() {
     }
 
     const IsLogin = () => {
-        console.log(response);
-        if (response=="null") {
-            return null;
-        } else { 
-            if (response.indexOf("user")>0) {
-                setuser(userName);
-                setsesion(true);
-                setinputs(false);
-                setimageRes(response.substr(response.indexOf("avatar")+9,1));
-                let myObj={usersave: userName, sesionsave: true, inputssesion: false, imagensesion: imageRes}
-                localStorage.setItem("savesesion", JSON.stringify(myObj));
-                return <div><p>Welcome back!</p></div>
-            } else {
-                
-            return <div><p>Wrong username or password.</p></div>
-            
-            }
-        }
+        return <div>{responseLog}</div>
     }
+    
 
     const seeinputs = () => {
         setinputs(true);
@@ -141,7 +154,7 @@ function App() {
                         </div>
                         <div>
                             <input  type="text" onChange={(ev)=>{setuserName(ev.target.value)}}/><br/>
-                            <input  type="text" onChange={(ev)=>{setpass(ev.target.value)}}/>
+                            <input  type="password" onChange={(ev)=>{setpass(ev.target.value)}}/>
                             <br/><br/>
                             <button onClick={login}>Log in</button>
                             <button onClick={actioncancel}>Cancel</button>
@@ -158,7 +171,7 @@ function App() {
                         </div>
                         <div>  
                             <input type="text" onChange={(ev)=>{setuserNameReg(ev.target.value)}}/><br/>
-                            <input type="text" onChange={(ev)=>{setpassReg(ev.target.value)}}/>
+                            <input type="password" onChange={(ev)=>{setpassReg(ev.target.value)}}/>
                             <br/><br/> 
                         </div> 
                     </div>   

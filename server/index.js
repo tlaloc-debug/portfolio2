@@ -78,14 +78,13 @@ app.post("/register", (req, res) => {
 
 app.post("/login", (req, res) => {
     username = req.body.username;
-    password = req.body.password;
     database.query(
-        "SELECT * FROM users WHERE user = ? AND password = ?", [username, password],
+        "SELECT * FROM users WHERE user = ?", [username],
         (err, result) => {
             if (err){
-                res.send(err);
+                return res.send(err);
             } else {
-                res.send(result);
+                return res.send(result);
             }
 
 

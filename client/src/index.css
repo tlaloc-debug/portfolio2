@@ -156,7 +156,7 @@ th, td {
 
 .transrigth{
   transition: transform 0.5s;
-  transform: translateX(350px);
+  transform: translateX(300px);
   
 }
 .nav {
@@ -269,4 +269,13 @@ th, td {
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+
+.glasson{
+  display: block;
+  width: 100%;
+}
+
+.glassoff{
+  display: none;
 }
