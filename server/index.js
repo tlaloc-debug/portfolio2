@@ -31,7 +31,7 @@ app.post("/search", (req, res) => {
 });
 
 app.get("/shop", (req, res) => {
-    database.query("SELECT * FROM micros, shop where micros.micro_id=shop.shop_id", (err, result ) => {
+    database.query("SELECT * FROM shop", (err, result ) => {
         return res.send(result)
     })
 })

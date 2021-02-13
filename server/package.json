@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "homepage": "https://loscoversdeltlaloc.000webhostapp.com/",
   "scripts": {
     "start": "node index.js",
     "devStart": "nodemon index.js",
